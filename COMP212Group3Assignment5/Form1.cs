@@ -29,18 +29,18 @@ namespace COMP212Group3Assignment5
         // PRIVATE METHODS
         private void encryptBtn_Click(object sender, EventArgs e)
         {
-            this.outputLabel.Text = "";
-            foreach(char c in this._cipher.Encrypt(textBoxInput.Text)){
-                this.outputLabel.Text +=c ;
+            this.textBoxDecrypt.Text = "";
+            foreach(char c in this._cipher.Encrypt(textBoxEncrypt.Text)){
+                this.textBoxDecrypt.Text += c;
             }
         }
 
         private void dencryptBtn_Click(object sender, EventArgs e)
         {
-            this.outputLabel.Text = "";
-            foreach (char c in this._cipher.Decrypt(textBoxInput.Text))
+            this.textBoxEncrypt.Text = "";
+            foreach (char c in this._cipher.Decrypt(textBoxDecrypt.Text))
             {
-                this.outputLabel.Text += c;
+                this.textBoxEncrypt.Text += c;
             }
         }
 
