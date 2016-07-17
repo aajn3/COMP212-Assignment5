@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 /* Group 3
  * Arlina Ramrattan, Neil Reading, Aaron Fernandes, Jay Clipperton
- * Assignment 4 - Ciphering Using Array List
+ * Assignment 5 - Ciphering Using Link List
 */
 namespace COMP212Group3Assignment5
 {
@@ -22,33 +22,55 @@ namespace COMP212Group3Assignment5
         }
 
         // PUBLIC METHODS
+        /// <summary>
+        ///     Encrypts a string 
+        /// </summary>
+        /// <param name="data">String to be encrypted</param>
+        /// <returns>A link list char array with the encrypted string</returns>
         public LinkedList<char> Encrypt(String data)
         {
             data = data.ToLower();
             int index;
-            LinkedList<char> _decodedArrayList = new LinkedList<char>();
+            LinkedList<char> decodedArrayList = new LinkedList<char>();
             foreach (Char c in data)
             {
-                index=0;
-                foreach(char ch in this._originalLinkList){
-                    if(c==ch){
-                        break;
+                if (char.IsLetter(c))
+                {
+                    index = 0;
+                    foreach (char ch in this._originalLinkList)
+                    {
+                        if (c == ch)
+                        {
+                            break;
+                        }
+                        index++;
+
                     }
-                    index++;
-                   
-                }
-                LinkedListNode<char> currentNode=this._keyLinkList.First;
-                for(int i=0;i<=index;i++){
-                    if(i==index){
-                        break;
+                    LinkedListNode<char> currentNode = this._keyLinkList.First;
+                    for (int i = 0; i <= index; i++)
+                    {
+                        if (i == index)
+                        {
+                            break;
+                        }
+                        currentNode = currentNode.Next;
                     }
-                    currentNode=currentNode.Next;
+
+                    decodedArrayList.AddLast(currentNode.Value);
                 }
-                _decodedArrayList.AddLast(currentNode.Value);
-            }
-            return _decodedArrayList;
+                else
+                {
+                    decodedArrayList.AddLast(c);
+                }
+            }//foreach
+            return decodedArrayList;
         }
 
+        /// <summary>
+        ///     Decrypts a string 
+        /// </summary>
+        /// <param name="data">String to be decrypted</param>
+        /// <returns></returns>
         public LinkedList<char> Decrypt(String data)
         {
             data = data.ToLower();
