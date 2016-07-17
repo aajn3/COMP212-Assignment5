@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 /* Group 3
  * Arlina Ramrattan, Neil Reading, Aaron Fernandes, Jay Clipperton
- * Assignment 4 - Ciphering Using Array List
+ * Assignment 5 - Ciphering Using Link List
 */
 namespace COMP212Group3Assignment5
 {
@@ -22,62 +22,122 @@ namespace COMP212Group3Assignment5
         }
 
         // PUBLIC METHODS
+        /// <summary>
+        ///     Encrypts a string 
+        /// </summary>
+        /// <param name="data">String to be encrypted</param>
+        /// <returns>A link list char array with the encrypted string</returns>
         public LinkedList<char> Encrypt(String data)
         {
-            data = data.ToLower();
             int index;
-            LinkedList<char> _decodedArrayList = new LinkedList<char>();
-            foreach (Char c in data)
+            char tmpDataChar;
+            LinkedList<char> decodedArrayList = new LinkedList<char>();
+
+
+            foreach (Char dataChar in data)
             {
-                index=0;
-                foreach(char ch in this._originalLinkList){
-                    if(c==ch){
-                        break;
+                // checks if char is a letter
+                // if not then it adds the same char
+                // to the list
+                if (char.IsLetter(dataChar))
+                {
+
+                    index = 0;
+                    tmpDataChar = char.ToLower(dataChar);
+
+                    foreach (char ch in this._originalLinkList)
+                    {
+                        if (tmpDataChar == ch)
+                        {
+                            break;
+                        }
+                        index++;
+
                     }
-                    index++;
-                   
-                }
-                LinkedListNode<char> currentNode=this._keyLinkList.First;
-                for(int i=0;i<=index;i++){
-                    if(i==index){
-                        break;
+                    LinkedListNode<char> currentNode = this._keyLinkList.First;
+                    for (int i = 0; i <= index; i++)
+                    {
+                        if (i == index)
+                        {
+                            break;
+                        }
+                        currentNode = currentNode.Next;
                     }
-                    currentNode=currentNode.Next;
+
+                    //checks to see if char was upper
+                    if (char.IsUpper(dataChar)){
+                        decodedArrayList.AddLast(char.ToUpper(currentNode.Value));
+                    }
+                    else{
+                        decodedArrayList.AddLast(currentNode.Value);
+                    }
                 }
-                _decodedArrayList.AddLast(currentNode.Value);
-            }
-            return _decodedArrayList;
+                else
+                {
+                    decodedArrayList.AddLast(dataChar);
+                }
+            }//foreach
+            return decodedArrayList;
         }
 
+        /// <summary>
+        ///     Decrypts a string 
+        /// </summary>
+        /// <param name="data">String to be decrypted</param>
+        /// <returns></returns>
         public LinkedList<char> Decrypt(String data)
         {
-            data = data.ToLower();
+            //data = data.ToLower();
             int index;
-            LinkedList<char> _decodedArrayList = new LinkedList<char>();
-            foreach (Char c in data)
-            {
-                index = 0;
-                foreach (char ch in this._keyLinkList)
-                {
-                    if (c == ch)
-                    {
-                        break;
-                    }
-                    index++;
+            char tmpDataChar;
+            LinkedList<char> decodedArrayList = new LinkedList<char>();
 
-                }
-                LinkedListNode<char> currentNode = this._originalLinkList.First;
-                for (int i = 0; i <= index; i++)
+
+
+            foreach (Char dataChar in data)
+            {
+                // checks if char is a letter
+                // if not then it adds the same char
+                // to the list
+                if (char.IsLetter(dataChar))
                 {
-                    if (i == index)
+                    index = 0;
+                    tmpDataChar = char.ToLower(dataChar);
+
+                    foreach (char keyListChar in this._keyLinkList)
                     {
-                        break;
+                        if (tmpDataChar == keyListChar)
+                        {
+                            break;
+                        }
+                        index++;
+
                     }
-                    currentNode = currentNode.Next;
+                    LinkedListNode<char> currentNode = this._originalLinkList.First;
+                    for (int i = 0; i <= index; i++)
+                    {
+                        if (i == index)
+                        {
+                            break;
+                        }
+                        currentNode = currentNode.Next;
+                    }
+                    //checks to see if char was upper
+                    if (char.IsUpper(dataChar))
+                    {
+                        decodedArrayList.AddLast(char.ToUpper(currentNode.Value));
+                    }
+                    else
+                    {
+                        decodedArrayList.AddLast(currentNode.Value);
+                    }
                 }
-                _decodedArrayList.AddLast(currentNode.Value);
+                else
+                {
+                    decodedArrayList.AddLast(dataChar);
+                }
             }
-            return _decodedArrayList;
+            return decodedArrayList;
         }
 
     }
