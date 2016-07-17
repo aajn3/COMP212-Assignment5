@@ -38,8 +38,7 @@ namespace COMP212Group3Assignment5
         private void dencryptBtn_Click(object sender, EventArgs e)
         {
             this.textBoxEncrypt.Text = "";
-            foreach (char c in this._cipher.Decrypt(textBoxDecrypt.Text))
-            {
+            foreach (char c in this._cipher.Decrypt(textBoxDecrypt.Text)){
                 this.textBoxEncrypt.Text += c;
             }
         }

@@ -29,17 +29,21 @@ namespace COMP212Group3Assignment5
         /// <returns>A link list char array with the encrypted string</returns>
         public LinkedList<char> Encrypt(String data)
         {
-            data = data.ToLower();
+            //data = data.ToLower();
             int index;
             LinkedList<char> decodedArrayList = new LinkedList<char>();
-            foreach (Char c in data)
+            foreach (Char dataChar in data)
             {
-                if (char.IsLetter(c))
+                char tmpDataChar = char.ToLower(dataChar);
+                // checks if char is a letter
+                // if not then it adds the same char
+                // to the list
+                if (char.IsLetter(tmpDataChar))
                 {
                     index = 0;
                     foreach (char ch in this._originalLinkList)
                     {
-                        if (c == ch)
+                        if (tmpDataChar == ch)
                         {
                             break;
                         }
@@ -56,11 +60,17 @@ namespace COMP212Group3Assignment5
                         currentNode = currentNode.Next;
                     }
 
-                    decodedArrayList.AddLast(currentNode.Value);
+                    //checks to see if char was upper
+                    if (char.IsUpper(dataChar)){
+                        decodedArrayList.AddLast(char.ToUpper(currentNode.Value));
+                    }
+                    else{
+                        decodedArrayList.AddLast(currentNode.Value);
+                    }
                 }
                 else
                 {
-                    decodedArrayList.AddLast(c);
+                    decodedArrayList.AddLast(dataChar);
                 }
             }//foreach
             return decodedArrayList;
@@ -75,31 +85,41 @@ namespace COMP212Group3Assignment5
         {
             data = data.ToLower();
             int index;
-            LinkedList<char> _decodedArrayList = new LinkedList<char>();
-            foreach (Char c in data)
+            LinkedList<char> decodedArrayList = new LinkedList<char>();
+            foreach (Char dataChar in data)
             {
-                index = 0;
-                foreach (char ch in this._keyLinkList)
+                // checks if char is a letter
+                // if not then it adds the same char
+                // to the list
+                if (char.IsLetter(dataChar))
                 {
-                    if (c == ch)
+                    index = 0;
+                    foreach (char keyListChar in this._keyLinkList)
                     {
-                        break;
-                    }
-                    index++;
+                        if (dataChar == keyListChar)
+                        {
+                            break;
+                        }
+                        index++;
 
-                }
-                LinkedListNode<char> currentNode = this._originalLinkList.First;
-                for (int i = 0; i <= index; i++)
-                {
-                    if (i == index)
-                    {
-                        break;
                     }
-                    currentNode = currentNode.Next;
+                    LinkedListNode<char> currentNode = this._originalLinkList.First;
+                    for (int i = 0; i <= index; i++)
+                    {
+                        if (i == index)
+                        {
+                            break;
+                        }
+                        currentNode = currentNode.Next;
+                    }
+                    decodedArrayList.AddLast(currentNode.Value);
                 }
-                _decodedArrayList.AddLast(currentNode.Value);
+                else
+                {
+                    decodedArrayList.AddLast(dataChar);
+                }
             }
-            return _decodedArrayList;
+            return decodedArrayList;
         }
 
     }
