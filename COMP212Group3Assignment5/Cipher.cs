@@ -29,18 +29,22 @@ namespace COMP212Group3Assignment5
         /// <returns>A link list char array with the encrypted string</returns>
         public LinkedList<char> Encrypt(String data)
         {
-            //data = data.ToLower();
             int index;
+            char tmpDataChar;
             LinkedList<char> decodedArrayList = new LinkedList<char>();
+
+
             foreach (Char dataChar in data)
             {
-                char tmpDataChar = char.ToLower(dataChar);
                 // checks if char is a letter
                 // if not then it adds the same char
                 // to the list
-                if (char.IsLetter(tmpDataChar))
+                if (char.IsLetter(dataChar))
                 {
+
                     index = 0;
+                    tmpDataChar = char.ToLower(dataChar);
+
                     foreach (char ch in this._originalLinkList)
                     {
                         if (tmpDataChar == ch)
@@ -83,9 +87,13 @@ namespace COMP212Group3Assignment5
         /// <returns></returns>
         public LinkedList<char> Decrypt(String data)
         {
-            data = data.ToLower();
+            //data = data.ToLower();
             int index;
+            char tmpDataChar;
             LinkedList<char> decodedArrayList = new LinkedList<char>();
+
+
+
             foreach (Char dataChar in data)
             {
                 // checks if char is a letter
@@ -94,9 +102,11 @@ namespace COMP212Group3Assignment5
                 if (char.IsLetter(dataChar))
                 {
                     index = 0;
+                    tmpDataChar = char.ToLower(dataChar);
+
                     foreach (char keyListChar in this._keyLinkList)
                     {
-                        if (dataChar == keyListChar)
+                        if (tmpDataChar == keyListChar)
                         {
                             break;
                         }
@@ -112,7 +122,15 @@ namespace COMP212Group3Assignment5
                         }
                         currentNode = currentNode.Next;
                     }
-                    decodedArrayList.AddLast(currentNode.Value);
+                    //checks to see if char was upper
+                    if (char.IsUpper(dataChar))
+                    {
+                        decodedArrayList.AddLast(char.ToUpper(currentNode.Value));
+                    }
+                    else
+                    {
+                        decodedArrayList.AddLast(currentNode.Value);
+                    }
                 }
                 else
                 {
